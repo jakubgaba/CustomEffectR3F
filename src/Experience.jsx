@@ -5,9 +5,14 @@ import { GlitchMode } from 'postprocessing'
 import { BlendFunction } from 'postprocessing'
 import Drunk from './Drunk.js'
 import { useRef } from 'react'
+import { useControls } from 'leva'
 
 export default function Experience() {
     const drunkRef = useRef()
+    const drunkProps = useControls('Drunk Effect', {
+        frequency: { value: 2, min: 1, max: 20 },
+        amplitude: { value: 0.1, min: 0, max: 1 }
+    })
     return <>
         <color args={['#ffffff']} attach={"background"} />
         <EffectComposer
@@ -43,8 +48,8 @@ export default function Experience() {
             /> */}
             <Drunk
                 ref={drunkRef}
-                frequency={2}
-                amplitude={0.1} />
+                {...drunkProps}
+            />
             <ToneMapping />
         </EffectComposer>
         <Perf position="top-left" />
